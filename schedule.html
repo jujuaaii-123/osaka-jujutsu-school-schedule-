@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오사카 중앙주술전문고등학교 — 학사 일정</title>
+    <style>
+        :root {
+            --bg-main: #000000;
+            --bg-card: #0a0a0a;
+            --bg-alt: #111111;
+            --text: #e0e0e0;
+            --text-soft: #999999;
+            --border: #2b2b2b;
+        }
+        * {box-sizing: border-box; margin: 0; padding: 0;}
+        body {
+            background: var(--bg-main);
+            color: var(--text);
+            font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== 메인 진입 화면 ===== */
+        .entrance-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .entrance-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .seal-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 2.5rem;
+        }
+        .seal-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-right-color: #cccccc;
+            animation: spin 12s linear infinite;
+        }
+        .seal-ring:nth-child(2) {
+            inset: 12px;
+            border-top-color: #eeeeee;
+            border-right-color: #ffffff;
+            animation-duration: 15s;
+            animation-direction: reverse;
+            opacity: 0.7;
+        }
+        .seal-ring:nth-child(3) {
+            inset: 24px;
+            border-top-color: #dddddd;
+            border-right-color: #eeeeee;
+            animation-duration: 18s;
+            opacity: 0.5;
+        }
+        @keyframes spin {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(360deg);}
+        }
+        .seal-core {
+            position: absolute;
+            inset: 36px;
+            background: radial-gradient(circle, #1a1a1a, #050505);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(255,255,255,0.15);
+        }
+        .seal-core span {
+            font-size: 2rem;
+            color: #ffffff;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+        .entrance-title {
+            font-size: 1.4rem;
+            color: #cccccc;
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+        }
+        .entrance-subtitle {
+            font-size: 0.9rem;
+            color: #888888;
+            margin-bottom: 2.5rem;
+        }
+        .enter-btn {
+            padding: 1rem 3.5rem;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #222222, #111111);
+            color: #dddddd;
+            border: 1px solid #555555;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 18px rgba(255,255,255,0.08);
+        }
+        .enter-btn:hover {
+            box-shadow: 0 0 30px rgba(255,255,255,0.12), inset 0 0 12px rgba(255,255,255,0.05);
+            transform: scale(1.03);
+        }
+
+        /* ===== 본문 영역 ===== */
+        .main-wrap {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .main-wrap.visible {opacity: 1;}
+
+        header {
+            background: linear-gradient(135deg, #111111, #0a0a0a);
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .site-title {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: #cccccc;
+            margin-bottom: 0.6rem;
+        }
+
+        main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 1.2rem;
+        }
+        .page {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from {opacity:0; transform: translateY(8px);}
+            to {opacity:1; transform: translateY(0);}
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #bbbbbb;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        /* ===== 학사 일정 스타일 ===== */
+        .schedule-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 25px;
+        }
+        .schedule-item {
+            padding: 16px 12px;
+            border-bottom: 1px solid #151515;
+            font-size: 16px;
+        }
+        .schedule-item:last-child {border-bottom:none;}
+        .month {
+            display:inline-block;
+            min-width:80px;
+            font-weight:bold;
+            color:#ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== 첫 진입 화면 ===== -->
+<div class="entrance-screen" id="entrance">
+    <div class="seal-container">
+        <div class="seal-ring"></div>
+        <div class="seal-ring"></div>
+        <div class="seal-ring"></div>
+        <div class="seal-core"><span>秘</span></div>
+    </div>
+    <h1 class="entrance-title">오사카 중앙주술전문고등학교</h1>
+    <p class="entrance-subtitle">학사 일정 정보 공개 · AUTHENTICATION REQUIRED</p>
+    <button class="enter-btn" onclick="enterSite()">[ 열 람 ]</button>
+</div>
+
+<!-- ===== 본문 ===== -->
+<div class="main-wrap" id="mainWrap">
+<header>
+    <div class="header-inner">
+        <div class="site-title">📅 학 사 일 정</div>
+    </div>
+</header>
+
+<main>
+    <h2>2026학년도 학사 일정</h2>
+    <div class="schedule-box">
+        <div class="schedule-item"><span class="month">3월</span>입학</div>
+        <div class="schedule-item"><span class="month">4월</span>기초 술식 교육 수립</div>
+        <div class="schedule-item"><span class="month">5월</span>기초 술식 중간 평가</div>
+        <div class="schedule-item"><span class="month">6월</span>개인 술식 교육</div>
+        <div class="schedule-item"><span class="month">7월</span>개인 술식 기말 평가</div>
+        <div class="schedule-item"><span class="month">8월</span>학급 휴가(수학 여행)</div>
+        <div class="schedule-item"><span class="month">9월</span>기초 임무 이론 교육</div>
+        <div class="schedule-item"><span class="month">10월</span>임무 및 실전 평가</div>
+        <div class="schedule-item"><span class="month">11월</span>등급 분배 심사 준비</div>
+        <div class="schedule-item"><span class="month">12월</span>등급 분배 심사</div>
+        <div class="schedule-item"><span class="month">1월</span>종업</div>
+        <div class="schedule-item"><span class="month">2월</span>방학</div>
+    </div>
+</main>
+</div>
+
+<script>
+/* ===== 첫 진입 처리 ===== */
+function enterSite() {
+    document.getElementById("entrance").classList.add("hidden");
+    setTimeout(() => {
+        document.getElementById("mainWrap").classList.add("visible");
+    }, 300);
+}
+</script>
+</body>
+</html>
